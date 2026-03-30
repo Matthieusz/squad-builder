@@ -53,10 +53,10 @@ export function importFromFile(file: File): Promise<AppData> {
         const validated = AppDataSchema.parse(parsed);
         resolve(validated);
       } catch (err) {
-        reject(new Error("Invalid file format"));
+        reject(new Error("Nieprawidłowy format pliku"));
       }
     };
-    reader.onerror = () => reject(new Error("Failed to read file"));
+    reader.onerror = () => reject(new Error("Nie udało się odczytać pliku"));
     reader.readAsText(file);
   });
 }

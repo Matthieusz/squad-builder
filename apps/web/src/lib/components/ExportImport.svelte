@@ -40,7 +40,7 @@
 		} catch (err) {
 			showImportError = true;
 			importErrorMessage =
-				err instanceof Error ? err.message : 'Failed to import data';
+				err instanceof Error ? err.message : 'Nie udało się zaimportować danych';
 		}
 
 		// Reset file input
@@ -70,17 +70,17 @@
 
 	<Button variant="outline" size="sm" onclick={handleExport}>
 		<IconDownload class="mr-2 h-4 w-4" />
-		Export
+		Eksportuj
 	</Button>
 
 	<Button variant="outline" size="sm" onclick={handleImportClick}>
 		<IconUpload class="mr-2 h-4 w-4" />
-		Import
+		Importuj
 	</Button>
 
 	<Button variant="destructive" size="sm" onclick={handleClear}>
 		<IconTrash class="mr-2 h-4 w-4" />
-		Clear All
+		Wyczyść wszystko
 	</Button>
 </div>
 
@@ -95,18 +95,18 @@
 <Dialog open={showClearConfirm} onOpenChange={(open) => (showClearConfirm = open)}>
 	<DialogContent>
 		<DialogHeader>
-			<DialogTitle>Clear All Data</DialogTitle>
+			<DialogTitle>Wyczyść wszystkie dane</DialogTitle>
 			<DialogDescription>
-				Are you sure you want to delete all data? This will remove all {appStore.accounts
-					.length} account{appStore.accounts.length === 1 ? '' : 's'} and {appStore.groups
-					.length} group{appStore.groups.length === 1 ? '' : 's'}. This action cannot be undone.
+				Czy na pewno chcesz usunąć wszystkie dane? Spowoduje to usunięcie {appStore.accounts
+					.length} kont{appStore.accounts.length === 1 ? 'a' : ''} i {appStore.groups
+					.length} grup{appStore.groups.length === 1 ? 'y' : ''}. Tej operacji nie można cofnąć.
 			</DialogDescription>
 		</DialogHeader>
 		<DialogFooter>
 			<Button variant="outline" onclick={() => (showClearConfirm = false)}>
-				Cancel
+				Anuluj
 			</Button>
-			<Button variant="destructive" onclick={confirmClear}>Clear All</Button>
+			<Button variant="destructive" onclick={confirmClear}>Wyczyść wszystko</Button>
 		</DialogFooter>
 	</DialogContent>
 </Dialog>

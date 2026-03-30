@@ -65,12 +65,12 @@
                     <span
                         >{group.squads.length} squad{group.squads.length === 1
                             ? ""
-                            : "s"}</span
+                            : "ów"}</span
                     >
                     <span>•</span>
                     <span>
                         <IconUsers class="mr-1 inline h-3 w-3" />
-                        {totalCharacters}/{totalSlots} characters
+                        {totalCharacters}/{totalSlots} postaci
                     </span>
                 </div>
             </div>
@@ -93,14 +93,13 @@
 >
     <DialogContent>
         <DialogHeader>
-            <DialogTitle>Delete Group</DialogTitle>
+            <DialogTitle>Usuń grupę</DialogTitle>
             <DialogDescription>
-                Are you sure you want to delete "{group.name}"? This will remove
-                all {group.squads.length} squad{group.squads.length === 1
-                    ? ""
-                    : "s"} and {totalCharacters} character{totalCharacters === 1
-                    ? ""
-                    : "s"}. This action cannot be undone.
+                Czy na pewno chcesz usunąć "{group.name}"? Spowoduje to usunięcie
+                {group.squads.length} squad{group.squads.length === 1
+                    ? "u"
+                    : "ów"} i {totalCharacters} postaci. Tej operacji nie można
+                cofnąć.
             </DialogDescription>
         </DialogHeader>
         <DialogFooter>
@@ -108,9 +107,9 @@
                 variant="outline"
                 onclick={() => (showDeleteConfirm = false)}
             >
-                Cancel
+                Anuluj
             </Button>
-            <Button variant="destructive" onclick={confirmDelete}>Delete</Button
+            <Button variant="destructive" onclick={confirmDelete}>Usuń</Button
             >
         </DialogFooter>
     </DialogContent>

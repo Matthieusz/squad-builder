@@ -96,7 +96,7 @@
                     class="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground"
                 />
                 <Input
-                    placeholder="Search..."
+                    placeholder="Szukaj..."
                     value={searchQuery}
                     oninput={(e) => handleSearch(e.currentTarget.value)}
                     class="pl-10"
@@ -108,10 +108,10 @@
                 onValueChange={handleWorldChange}
             >
                 <SelectTrigger class="w-30">
-                    {filters.world || "World"}
+                    {filters.world || "Świat"}
                 </SelectTrigger>
                 <SelectContent>
-                    <SelectItem value={""}>All Worlds</SelectItem>
+                    <SelectItem value={""}>Wszystkie światy</SelectItem>
                     {#each worlds as world}
                         <SelectItem value={world}>{world}</SelectItem>
                     {/each}
@@ -126,7 +126,7 @@
 
         <!-- Level Range filters -->
         <div class="flex items-center gap-2 w-full">
-            <span class="text-xs text-muted-foreground ml-2">Level:</span>
+            <span class="text-xs text-muted-foreground ml-2">Poziom:</span>
             <Input
                 type="number"
                 placeholder="Min"
@@ -166,10 +166,10 @@
         </div>
 
         <div class="text-xs text-muted-foreground ml-2">
-            {availableCharacters.length} available
+            {availableCharacters.length} dostępnych
             {#if squad.characterIds.length > 0}
                 <span class="text-muted-foreground/70">
-                    ({squad.characterIds.length}/10 in squad)</span
+                    ({squad.characterIds.length}/10 w squadzie)</span
                 >
             {/if}
         </div>
@@ -181,7 +181,7 @@
             <div
                 class="flex h-full items-center justify-center text-muted-foreground text-sm"
             >
-                No characters available
+                Brak dostępnych postaci
             </div>
         {:else}
             <div class="space-y-2 pr-3">

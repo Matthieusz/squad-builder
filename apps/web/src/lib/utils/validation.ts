@@ -10,15 +10,15 @@ export function canAddCharacterToSquad(
   const character = findCharacter(characterId, accounts);
 
   if (!character) {
-    return { valid: false, reason: "Character not found" };
+    return { valid: false, reason: "Postać nie znaleziona" };
   }
 
   if (squad.characterIds.length >= 10) {
-    return { valid: false, reason: "Squad is full (max 10 characters)" };
+    return { valid: false, reason: "Squad jest pełny (maks. 10 postaci)" };
   }
 
   if (squad.characterIds.includes(characterId)) {
-    return { valid: false, reason: "Character already in this squad" };
+    return { valid: false, reason: "Postać już jest w tym squadzie" };
   }
 
   const accountCharsInSquad = squad.characterIds
@@ -28,7 +28,7 @@ export function canAddCharacterToSquad(
   if (accountCharsInSquad.length > 0) {
     return {
       valid: false,
-      reason: "Another character from this account is already in the squad",
+      reason: "Inna postać z tego konta jest już w squadzie",
     };
   }
 
@@ -39,7 +39,7 @@ export function canAddCharacterToSquad(
   if (usedInOtherSquad) {
     return {
       valid: false,
-      reason: "Character already used in another squad in this group",
+      reason: "Postać jest już użyta w innym squadzie w tej grupie",
     };
   }
 
@@ -116,12 +116,12 @@ export function getUsedCharactersInGroup(group: SquadGroup): Set<string> {
 export function validateGroupName(name: string): ValidationError[] {
   const errors: ValidationError[] = [];
   if (!name.trim()) {
-    errors.push({ field: "name", message: "Group name is required" });
+    errors.push({ field: "name", message: "Nazwa grupy jest wymagana" });
   }
   if (name.length > 100) {
     errors.push({
       field: "name",
-      message: "Group name must be 100 characters or less",
+      message: "Nazwa grupy musi mieć maks. 100 znaków",
     });
   }
   return errors;
@@ -130,12 +130,12 @@ export function validateGroupName(name: string): ValidationError[] {
 export function validateSquadName(name: string): ValidationError[] {
   const errors: ValidationError[] = [];
   if (!name.trim()) {
-    errors.push({ field: "name", message: "Squad name is required" });
+    errors.push({ field: "name", message: "Nazwa squadu jest wymagana" });
   }
   if (name.length > 100) {
     errors.push({
       field: "name",
-      message: "Squad name must be 100 characters or less",
+      message: "Nazwa squadu musi mieć maks. 100 znaków",
     });
   }
   return errors;
@@ -144,12 +144,12 @@ export function validateSquadName(name: string): ValidationError[] {
 export function validateAccountName(name: string): ValidationError[] {
   const errors: ValidationError[] = [];
   if (!name.trim()) {
-    errors.push({ field: "name", message: "Account name is required" });
+    errors.push({ field: "name", message: "Nazwa konta jest wymagana" });
   }
   if (name.length > 100) {
     errors.push({
       field: "name",
-      message: "Account name must be 100 characters or less",
+      message: "Nazwa konta musi mieć maks. 100 znaków",
     });
   }
   return errors;

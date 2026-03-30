@@ -41,7 +41,7 @@
 			(g) => g.name.toLowerCase() === newGroupName.toLowerCase()
 		);
 		if (existing) {
-			validationErrors = ['A group with this name already exists'];
+			validationErrors = ['Grupa o tej nazwie już istnieje'];
 			return;
 		}
 
@@ -54,19 +54,19 @@
 
 <div class="space-y-4">
 	<div class="flex items-center justify-between">
-		<h2 class="text-lg font-semibold">Squad Groups</h2>
+		<h2 class="text-lg font-semibold">Grupy squadów</h2>
 		<Button onclick={openCreateDialog} size="sm">
 			<IconPlus class="mr-2 h-4 w-4" />
-			Create Group
+			Utwórz grupę
 		</Button>
 	</div>
 
 	{#if appStore.groups.length === 0}
 		<div class="rounded-lg border border-dashed p-8 text-center">
 			<IconFolder class="mx-auto mb-2 h-8 w-8 text-muted-foreground/50" />
-			<p class="text-sm text-muted-foreground">No groups created yet.</p>
+			<p class="text-sm text-muted-foreground">Nie utworzono jeszcze żadnych grup.</p>
 			<p class="text-xs text-muted-foreground/70">
-				Click "Create Group" to start building squads.
+				Kliknij „Utwórz grupę", aby rozpocząć tworzenie squadów.
 			</p>
 		</div>
 	{:else}
@@ -82,16 +82,16 @@
 <Dialog open={showCreateDialog} onOpenChange={(open) => (showCreateDialog = open)}>
 	<DialogContent>
 		<DialogHeader>
-			<DialogTitle>Create New Group</DialogTitle>
+			<DialogTitle>Utwórz nową grupę</DialogTitle>
 		</DialogHeader>
 
 		<div class="space-y-4 py-4">
 			<div class="space-y-2">
-				<label for="group-name" class="text-sm font-medium">Group Name</label>
+				<label for="group-name" class="text-sm font-medium">Nazwa grupy</label>
 			<Input
 				id="group-name"
 				bind:value={newGroupName}
-				placeholder="e.g., Event 1"
+				placeholder="np. Event 1"
 			/>
 				{#if validationErrors.length > 0}
 					<div class="space-y-1">
@@ -105,10 +105,10 @@
 
 		<DialogFooter>
 			<Button variant="outline" onclick={() => (showCreateDialog = false)}>
-				Cancel
+				Anuluj
 			</Button>
 			<Button onclick={handleCreate} disabled={!newGroupName.trim()}>
-				Create
+				Utwórz
 			</Button>
 		</DialogFooter>
 	</DialogContent>

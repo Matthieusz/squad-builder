@@ -70,7 +70,7 @@
         <h3 class="font-semibold">{squad.name}</h3>
         <div class="flex items-center gap-2 text-xs text-muted-foreground">
             <IconUsers class="h-3 w-3" />
-            <span>{squad.characterIds.length}/10 characters</span>
+            <span>{squad.characterIds.length}/10 postaci</span>
         </div>
     </div>
 
@@ -79,7 +79,7 @@
         <div
             class="rounded-md border border-dashed py-6 text-center text-xs text-muted-foreground"
         >
-            Empty squad
+            Pusty squad
         </div>
     {:else}
         <div class="mb-3 space-y-2">
@@ -103,7 +103,7 @@
             {/each}
             {#if squadCharacters.length > 3}
                 <div class="text-xs text-muted-foreground">
-                    +{squadCharacters.length - 3} more
+                    +{squadCharacters.length - 3} więcej
                 </div>
             {/if}
         </div>
@@ -117,13 +117,11 @@
 >
     <DialogContent>
         <DialogHeader>
-            <DialogTitle>Delete Squad</DialogTitle>
+            <DialogTitle>Usuń squad</DialogTitle>
             <DialogDescription>
-                Are you sure you want to delete "{squad.name}"? This will remove
-                all {squad.characterIds.length} character{squad.characterIds
-                    .length === 1
-                    ? ""
-                    : "s"} from this squad. This action cannot be undone.
+                Czy na pewno chcesz usunąć "{squad.name}"? Spowoduje to usunięcie
+                {squad.characterIds.length} postaci z tego squadu. Tej operacji
+                nie można cofnąć.
             </DialogDescription>
         </DialogHeader>
         <DialogFooter>
@@ -131,13 +129,13 @@
                 variant="outline"
                 onclick={() => (showDeleteConfirm = false)}
             >
-                Cancel
+                Anuluj
             </Button>
             <Button
                 variant="destructive"
                 onclick={() => confirmDelete(getGroupId())}
             >
-                Delete
+                Usuń
             </Button>
         </DialogFooter>
     </DialogContent>

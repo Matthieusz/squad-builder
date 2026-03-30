@@ -20,7 +20,7 @@
 			class="flex items-center gap-2 text-lg font-bold hover:text-primary"
 		>
 			<IconUsers class="h-5 w-5" />
-			<span>Margonem Squad Builder</span>
+			<span>Kreator Drużyn Margonem</span>
 		</a>
 		<div class="flex items-center gap-2">
 			<ExportImport />

@@ -84,7 +84,7 @@
 <Dialog {open} onOpenChange={onOpenChange}>
 	<DialogContent class="max-h-[90vh] max-w-4xl">
 		<DialogHeader>
-			<DialogTitle>Add Character to Squad</DialogTitle>
+			<DialogTitle>Dodaj postać do squadu</DialogTitle>
 		</DialogHeader>
 
 		<div class="flex flex-col gap-4 py-4">
@@ -96,7 +96,7 @@
 						class="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground"
 					/>
 						<Input
-							placeholder="Search by name..."
+							placeholder="Szukaj po nazwie..."
 							value={searchQuery}
 							oninput={(e) => handleSearch(e.currentTarget.value)}
 							class="pl-10"
@@ -108,10 +108,10 @@
 						onValueChange={handleWorldChange}
 					>
 					<SelectTrigger class="w-[140px]">
-						{filters.world || 'All Worlds'}
+						{filters.world || 'Wszystkie światy'}
 					</SelectTrigger>
 						<SelectContent>
-							<SelectItem value={''}>All Worlds</SelectItem>
+							<SelectItem value={''}>Wszystkie światy</SelectItem>
 							{#each worlds as world}
 								<SelectItem value={world}>{world}</SelectItem>
 							{/each}
@@ -142,12 +142,12 @@
 				</div>
 
 				<div class="text-sm text-muted-foreground">
-					{availableCharacters.length} character{availableCharacters.length === 1
-						? ''
-						: 's'} available
+					{availableCharacters.length} dostępn{availableCharacters.length === 1
+						? 'a'
+						: 'ych'} postac{availableCharacters.length === 1 ? 'i' : 'i'}
 					{#if squad.characterIds.length > 0}
 						<span class="text-muted-foreground/70">
-							({squad.characterIds.length}/10 in squad)
+							({squad.characterIds.length}/10 w squadzie)
 						</span>
 					{/if}
 				</div>
@@ -157,7 +157,7 @@
 			<ScrollArea class="h-[400px]">
 				{#if availableCharacters.length === 0}
 					<div class="flex h-full items-center justify-center text-muted-foreground">
-						No characters available with current filters
+						Brak dostępnych postaci z obecnymi filtrami
 					</div>
 				{:else}
 					<div class="grid gap-2 pr-4">

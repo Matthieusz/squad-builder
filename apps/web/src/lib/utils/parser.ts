@@ -21,18 +21,18 @@ function extractAccountName(doc: Document): string {
   const heading = doc.querySelector(".heading.heading--left");
   if (heading?.textContent) {
     const match = heading.textContent.match(/Witaj,\s*(.+?)!/);
-    return match?.[1]?.trim() ?? "Unknown Account";
+    return match?.[1]?.trim() ?? "Nieznane konto";
   }
 
   const profileLink = doc.querySelector('a[href*="/profile/view,"]');
   if (profileLink) {
     const match = profileLink.getAttribute("href")?.match(/view,(\d+)/);
     if (match) {
-      return `Account ${match[1]}`;
+      return `Konto ${match[1]}`;
     }
   }
 
-  return "Unknown Account";
+  return "Nieznane konto";
 }
 
 function extractProfileUrl(doc: Document): string | undefined {
