@@ -83,7 +83,7 @@
         { code: "h", name: "Łow", color: "#f97316" },
         { code: "p", name: "Pal", color: "#3b82f6" },
         { code: "m", name: "Mag", color: "#8b5cf6" },
-        { code: "k", name: "TO", color: "#06b6d4" },
+        { code: "k", name: "Tanc", color: "#06b6d4" },
     ];
 </script>
 

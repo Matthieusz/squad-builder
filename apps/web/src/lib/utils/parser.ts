@@ -79,9 +79,8 @@ function parseCharacterElement(el: HTMLElement): Omit<Character, "accountId"> | 
 
     const charNick = getInputValue(el, "nick", "chnick") || el.dataset.nick || "";
     const charLvl = parseInt(getInputValue(el, "lvl", "chlvl") || el.dataset.lvl || "0", 10);
-    const charProf = (getInputValue(el, "prof", "chprof") ||
-      el.dataset.prof ||
-      "w") as ProfessionCode;
+    const rawProf = getInputValue(el, "prof", "chprof") || el.dataset.prof || "w";
+    const charProf = (rawProf === "b" ? "k" : rawProf) as ProfessionCode;
     const charProfName = getInputValue(el, "profname", "chprofname") || "Wojownik";
     const charWorld =
       getInputValue(el, "world", "chworld") || el.dataset.world || extractWorldFromElement(el);
