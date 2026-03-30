@@ -1,4 +1,6 @@
 <script lang="ts">
+    import Button from "$lib/components/ui/button/button.svelte";
+
     const TITLE_TEXT = `
    ██████╗ ███████╗████████╗████████╗███████╗██████╗
    ██╔══██╗██╔════╝╚══██╔══╝╚══██╔══╝██╔════╝██╔══██╗
@@ -19,4 +21,5 @@
 <div class="container mx-auto max-w-3xl px-4 py-2">
     <pre class="overflow-x-auto font-mono text-sm">{TITLE_TEXT}</pre>
     <div class="grid gap-6"></div>
+    <Button size="lg">test</Button>
 </div>
