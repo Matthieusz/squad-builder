@@ -77,7 +77,7 @@
 		{ code: 'h', name: 'Łowca', color: '#f97316' },
 		{ code: 'p', name: 'Paladyn', color: '#3b82f6' },
 		{ code: 'm', name: 'Mag', color: '#8b5cf6' },
-		{ code: 'k', name: 'Tancerz Ostrzy', color: '#06b6d4' },
+		{ code: 'b', name: 'Tancerz Ostrzy', color: '#06b6d4' },
 	];
 </script>
 

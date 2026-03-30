@@ -1,4 +1,4 @@
-export type ProfessionCode = "w" | "t" | "h" | "p" | "m" | "k";
+export type ProfessionCode = "w" | "t" | "h" | "p" | "m" | "b";
 
 export interface Character {
   id: string;
