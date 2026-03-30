@@ -21,7 +21,13 @@ function extractAccountName(doc: Document): string {
   const heading = doc.querySelector(".heading.heading--left");
   if (heading?.textContent) {
     const match = heading.textContent.match(/Witaj,\s*(.+?)!/);
-    return match?.[1]?.trim() ?? "Nieznane konto";
+    if (match?.[1]) return match[1].trim();
+  }
+
+  const profileNameEl = doc.querySelector(".profile-header__name span");
+  if (profileNameEl?.textContent) {
+    const name = profileNameEl.textContent.trim();
+    if (name) return name;
   }
 
   const profileLink = doc.querySelector('a[href*="/profile/view,"]');
@@ -58,18 +64,29 @@ function extractCharacters(doc: Document): Omit<Character, "accountId">[] {
   return characters;
 }
 
+function getInputValue(el: HTMLElement, name: string, cls: string): string | undefined {
+  return (
+    (el.querySelector(`input[name="${name}"]`) as HTMLInputElement)?.value ||
+    (el.querySelector(`input.${cls}`) as HTMLInputElement)?.value ||
+    undefined
+  );
+}
+
 function parseCharacterElement(el: HTMLElement): Omit<Character, "accountId"> | null {
   try {
-    const id = el.dataset.id;
+    const id = el.dataset.id || getInputValue(el, "id", "chid") || undefined;
     if (!id) return null;
 
-    const nickInput = el.querySelector('input[name="nick"]') as HTMLInputElement;
-    const lvlInput = el.querySelector('input[name="lvl"]') as HTMLInputElement;
-    const profInput = el.querySelector('input[name="prof"]') as HTMLInputElement;
-    const profnameInput = el.querySelector('input[name="profname"]') as HTMLInputElement;
-    const worldInput = el.querySelector('input[name="world"]') as HTMLInputElement;
-    const clanInput = el.querySelector('input[name="clan"]') as HTMLInputElement;
-    const genderInput = el.querySelector('input[name="gender"]') as HTMLInputElement;
+    const charNick = getInputValue(el, "nick", "chnick") || el.dataset.nick || "";
+    const charLvl = parseInt(getInputValue(el, "lvl", "chlvl") || el.dataset.lvl || "0", 10);
+    const charProf = (getInputValue(el, "prof", "chprof") ||
+      el.dataset.prof ||
+      "w") as ProfessionCode;
+    const charProfName = getInputValue(el, "profname", "chprofname") || "Wojownik";
+    const charWorld =
+      getInputValue(el, "world", "chworld") || el.dataset.world || extractWorldFromElement(el);
+    const charClan = getInputValue(el, "clan", "chguild") || "";
+    const charGender = (getInputValue(el, "gender", "chgender") || "m") as "m" | "k";
 
     let spriteUrl = "";
     const spriteEl = el.querySelector(".cimg, #charimg");
@@ -80,14 +97,6 @@ function parseCharacterElement(el: HTMLElement): Omit<Character, "accountId"> | 
         spriteUrl = match[1].replace(/&quot;/g, "");
       }
     }
-
-    const charWorld = worldInput?.value || el.dataset.world || extractWorldFromElement(el);
-    const charNick = nickInput?.value || el.dataset.nick || "";
-    const charLvl = parseInt(lvlInput?.value || el.dataset.lvl || "0", 10);
-    const charProf = (profInput?.value || el.dataset.prof || "w") as ProfessionCode;
-    const charProfName = profnameInput?.value || "Wojownik";
-    const charClan = clanInput?.value || "";
-    const charGender = (genderInput?.value || "m") as "m" | "k";
 
     if (!charNick || charLvl <= 0) {
       return null;
