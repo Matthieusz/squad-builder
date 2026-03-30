@@ -92,7 +92,7 @@
                                 {account.characters.length} postaci {account
                                     .characters.length === 1
                                     ? ""
-                                    : "s"}
+                                    : ""}
                             </span>
                         </div>
                         <div class="flex items-center gap-2">
@@ -160,8 +160,7 @@
         </DialogHeader>
         <DialogFooter>
             <Button variant="outline" onclick={cancelDelete}>Anuluj</Button>
-            <Button variant="destructive" onclick={executeDelete}>Usuń</Button
-            >
+            <Button variant="destructive" onclick={executeDelete}>Usuń</Button>
         </DialogFooter>
     </DialogContent>
 </Dialog>

@@ -50,9 +50,7 @@
             (s) => s.name.toLowerCase() === newSquadName.toLowerCase(),
         );
         if (existing) {
-            validationErrors = [
-              "Squad o tej nazwie już istnieje w tej grupie",
-            ];
+            validationErrors = ["Squad o tej nazwie już istnieje w tej grupie"];
             return;
         }
 
@@ -111,13 +109,13 @@
                             >{group.squads.length} squad {group.squads
                                 .length === 1
                                 ? ""
-                                : "s"}</span
+                                : ""}</span
                         >
                         <span>•</span>
                         <span
                             >{totalCharacters} postaci {totalCharacters === 1
                                 ? ""
-                                : "s"}</span
+                                : ""}</span
                         >
                     </div>
                 </div>
