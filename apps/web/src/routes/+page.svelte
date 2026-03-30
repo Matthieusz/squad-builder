@@ -3,7 +3,6 @@
 	import AccountImporter from '$lib/components/AccountImporter.svelte';
 	import AccountList from '$lib/components/AccountList.svelte';
 	import SquadGroupList from '$lib/components/SquadGroupList.svelte';
-	import ExportImport from '$lib/components/ExportImport.svelte';
 
 	let showImporter = $state(false);
 
@@ -12,26 +11,11 @@
 	}
 </script>
 
-<svelte:head>
-	<title>Margonem Squad Builder</title>
-</svelte:head>
-
 <div class="container mx-auto max-w-7xl p-4">
-	<!-- Header -->
-	<div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-		<div>
-			<h1 class="text-2xl font-bold">Margonem Squad Builder</h1>
-			<p class="text-sm text-muted-foreground">
-				Create and manage character squads for your adventures
-			</p>
-		</div>
-		<ExportImport />
-	</div>
-
 	<!-- Main Content -->
-	<div class="grid gap-6 lg:grid-cols-[350px_1fr]">
+	<div class="grid gap-6 lg:grid-cols-[320px_1fr]">
 		<!-- Left Column - Accounts -->
-		<aside>
+		<aside class="lg:top-24 lg:sticky lg:max-h-[calc(100vh-7rem)] lg:overflow-y-auto">
 			<AccountList onAddAccount={() => (showImporter = true)} />
 		</aside>
 
