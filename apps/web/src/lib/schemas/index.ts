@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const ProfessionCodeSchema = z.enum(["w", "t", "h", "p", "m", "k"]);
+export const ProfessionCodeSchema = z.enum(["w", "t", "h", "p", "m", "b"]);
 
 export const CharacterSchema = z.object({
   id: z.string(),
