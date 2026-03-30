@@ -1,95 +1,109 @@
 <script lang="ts">
-	import type { Character } from '$lib/types';
-	import { getProfessionStyle } from '$lib/utils/profession';
-	import { Badge } from '$lib/components/ui/badge';
-	import { cn } from '$lib/utils';
+    import type { Character } from "$lib/types";
+    import { getProfessionStyle } from "$lib/utils/profession";
+    import { Badge } from "$lib/components/ui/badge";
+    import { cn } from "$lib/utils";
 
-	interface Props {
-		character: Character;
-		showAccount?: boolean;
-		accountName?: string;
-		selected?: boolean;
-		disabled?: boolean;
-		onClick?: () => void;
-		class?: string;
-	}
+    interface Props {
+        character: Character;
+        showAccount?: boolean;
+        accountName?: string;
+        selected?: boolean;
+        disabled?: boolean;
+        onClick?: () => void;
+        class?: string;
+        size?: "sm" | "md" | "lg";
+    }
 
-	let {
-		character,
-		showAccount = false,
-		accountName = '',
-		selected = false,
-		disabled = false,
-		onClick,
-		class: className = '',
-	}: Props = $props();
+    let {
+        character,
+        showAccount = false,
+        accountName = "",
+        selected = false,
+        disabled = false,
+        onClick,
+        class: className = "",
+        size = "md",
+    }: Props = $props();
 
-	const profStyle = $derived(getProfessionStyle(character.prof));
+    const profStyle = $derived(getProfessionStyle(character.prof));
+
+    const textSizeClasses = {
+        sm: "text-xs",
+        md: "text-sm",
+        lg: "text-base",
+    };
 </script>
 
 <button
-	type="button"
-	class={cn(
-		'relative flex flex-col gap-2 rounded-lg border p-3 transition-all',
-		selected
-			? 'border-primary bg-primary/10'
-			: 'border-border bg-card hover:border-primary/50',
-		disabled && 'cursor-not-allowed opacity-50',
-		className
-	)}
-	disabled={disabled}
-	onclick={onClick}
+    type="button"
+    class={cn(
+        "relative flex gap-3 rounded-lg border p-3 transition-all w-full text-left items-center",
+        selected
+            ? "border-primary bg-primary/10"
+            : "border-border bg-card hover:border-primary-foreground/50",
+        disabled && "cursor-not-allowed opacity-60",
+        className,
+    )}
+    {disabled}
+    onclick={onClick}
 >
-	<div class="flex items-center gap-3">
-		<!-- Character Sprite -->
-		<div
-			class="flex h-16 w-16 items-center justify-center overflow-hidden rounded-md bg-muted"
-		>
-			{#if character.spriteUrl}
-				<img
-					src={character.spriteUrl}
-					alt={character.nick}
-					class="h-full w-full object-contain"
-				/>
-			{:else}
-				<span class="text-xs text-muted-foreground">No image</span>
-			{/if}
-		</div>
+    <!-- Character Sprite - Top-left frame only -->
+    <div
+        class="shrink-0 overflow-hidden rounded-md h-12 w-8"
+        style={character.spriteUrl
+            ? `background-image: url('${character.spriteUrl}'); background-position: 0% 0%;`
+            : ""}
+    >
+        {#if !character.spriteUrl}
+            <span
+                class="flex h-full w-full items-center justify-center text-xs text-muted-foreground"
+            >
+                ?
+            </span>
+        {/if}
+    </div>
 
-		<div class="flex flex-col gap-1 text-left">
-			<!-- Character Name -->
-			<div class="font-semibold text-card-foreground">{character.nick}</div>
+    <div
+        class="flex min-w-0 flex-1 flex-col justify-center gap-1 overflow-hidden"
+    >
+        <!-- Character Name -->
+        <div class={cn("font-semibold truncate", textSizeClasses[size])}>
+            {character.nick}
+        </div>
 
-			<!-- Level and Profession -->
-			<div class="flex items-center gap-2 text-sm">
-				<span class="text-muted-foreground">Lvl {character.lvl}</span>
-				<Badge
-					variant="outline"
-					style="border-color: {profStyle.color}; color: {profStyle.color};"
-				>
-					{character.profname}
-				</Badge>
-			</div>
+        <!-- Level and Profession -->
+        <div class="flex items-center gap-2 text-xs">
+            <span class="text-muted-foreground">Lvl {character.lvl}</span>
+            <Badge
+                variant="outline"
+                class="text-xs"
+                style="border-color: {profStyle.color}; color: {profStyle.color};"
+            >
+                {character.profname}
+            </Badge>
+        </div>
 
-			<!-- World -->
-			<div class="text-xs text-muted-foreground">
-				{character.world}
-				{#if character.clan}
-					<span class="text-muted-foreground/70">• {character.clan}</span>
-				{/if}
-			</div>
-		</div>
-	</div>
+        <!-- World + Clan -->
+        <div class="truncate text-xs text-muted-foreground">
+            {character.world}
+            {#if character.clan}
+                <span class="text-muted-foreground/70">• {character.clan}</span>
+            {/if}
+        </div>
+    </div>
 
-	{#if showAccount && accountName}
-		<div class="mt-1 text-xs text-muted-foreground/60">
-			Account: {accountName}
-		</div>
-	{/if}
+    {#if showAccount && accountName}
+        <div
+            class="absolute bottom-1 right-2 text-[10px] text-muted-foreground/50"
+        >
+            {accountName}
+        </div>
+    {/if}
 
-	{#if selected}
-		<div
-			class="absolute right-2 top-2 h-3 w-3 rounded-full bg-primary"
-		></div>
-	{/if}
+    {#if selected}
+        <div
+            class="absolute right-2 top-2 h-3 w-3 rounded-full bg-primary"
+        ></div>
+    {/if}
 </button>
