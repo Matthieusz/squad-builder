@@ -1,0 +1,3 @@
+{
+  "extends": "@squad-builder/config/tsconfig.base.json"
+}
