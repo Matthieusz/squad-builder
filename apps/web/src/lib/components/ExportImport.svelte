@@ -14,6 +14,8 @@
 	import { IconDownload, IconUpload, IconTrash, IconAlertCircle } from '@tabler/icons-svelte';
 
 	let showClearConfirm = $state(false);
+	let showClearAccountsConfirm = $state(false);
+	let showClearGroupsConfirm = $state(false);
 	let showImportError = $state(false);
 	let importErrorMessage = $state('');
 	let fileInput: HTMLInputElement | null = $state(null);
@@ -40,7 +42,7 @@
 		} catch (err) {
 			showImportError = true;
 			importErrorMessage =
-				err instanceof Error ? err.message : 'Nie udało się zaimportować danych';
+				err instanceof Error ? err.message : 'Nie udało się zaimportować dane';
 		}
 
 		// Reset file input
@@ -56,6 +58,16 @@
 	function confirmClear() {
 		appStore.clearAll();
 		showClearConfirm = false;
+	}
+
+	function confirmClearAccounts() {
+		appStore.clearAccounts();
+		showClearAccountsConfirm = false;
+	}
+
+	function confirmClearGroups() {
+		appStore.clearGroups();
+		showClearGroupsConfirm = false;
 	}
 </script>
 
@@ -78,6 +90,20 @@
 		Importuj
 	</Button>
 
+	{#if appStore.accounts.length > 0}
+		<Button variant="outline" size="sm" onclick={() => (showClearAccountsConfirm = true)}>
+			<IconTrash class="mr-2 h-4 w-4" />
+			Usuń konta
+		</Button>
+	{/if}
+
+	{#if appStore.groups.length > 0}
+		<Button variant="outline" size="sm" onclick={() => (showClearGroupsConfirm = true)}>
+			<IconTrash class="mr-2 h-4 w-4" />
+			Usuń grupy
+		</Button>
+	{/if}
+
 	<Button variant="destructive" size="sm" onclick={handleClear}>
 		<IconTrash class="mr-2 h-4 w-4" />
 		Wyczyść wszystko
@@ -91,7 +117,43 @@
 	</Alert>
 {/if}
 
-<!-- Clear Confirmation Dialog -->
+<!-- Clear Accounts Dialog -->
+<Dialog open={showClearAccountsConfirm} onOpenChange={(open) => (showClearAccountsConfirm = open)}>
+	<DialogContent>
+		<DialogHeader>
+			<DialogTitle>Usuń wszystkie konta</DialogTitle>
+			<DialogDescription>
+				Czy na pewno chcesz usunąć wszystkie {appStore.accounts.length} kont{appStore.accounts.length === 1 ? 'o' : 'a'}? Postacie zostaną usunięte ze składów. Grupy pozostaną. Tej operacji nie można cofnąć.
+			</DialogDescription>
+		</DialogHeader>
+		<DialogFooter>
+			<Button variant="outline" onclick={() => (showClearAccountsConfirm = false)}>
+				Anuluj
+			</Button>
+			<Button variant="destructive" onclick={confirmClearAccounts}>Usuń konta</Button>
+		</DialogFooter>
+	</DialogContent>
+</Dialog>
+
+<!-- Clear Groups Dialog -->
+<Dialog open={showClearGroupsConfirm} onOpenChange={(open) => (showClearGroupsConfirm = open)}>
+	<DialogContent>
+		<DialogHeader>
+			<DialogTitle>Usuń wszystkie grupy</DialogTitle>
+			<DialogDescription>
+				Czy na pewno chcesz usunąć wszystkie {appStore.groups.length} grup{appStore.groups.length === 1 ? 'ę' : 'y'}? Konta pozostaną. Tej operacji nie można cofnąć.
+			</DialogDescription>
+		</DialogHeader>
+		<DialogFooter>
+			<Button variant="outline" onclick={() => (showClearGroupsConfirm = false)}>
+				Anuluj
+			</Button>
+			<Button variant="destructive" onclick={confirmClearGroups}>Usuń grupy</Button>
+		</DialogFooter>
+	</DialogContent>
+</Dialog>
+
+<!-- Clear All Dialog -->
 <Dialog open={showClearConfirm} onOpenChange={(open) => (showClearConfirm = open)}>
 	<DialogContent>
 		<DialogHeader>

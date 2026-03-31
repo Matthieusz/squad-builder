@@ -191,6 +191,24 @@ class AppStore {
     this.#groups = [];
     clearAllData();
   }
+
+  clearAccounts() {
+    // Remove all character references from squads first
+    this.#groups = this.#groups.map((group) => ({
+      ...group,
+      squads: group.squads.map((squad) => ({
+        ...squad,
+        characterIds: [],
+      })),
+    }));
+    this.#accounts = [];
+    this.#persist();
+  }
+
+  clearGroups() {
+    this.#groups = [];
+    this.#persist();
+  }
 }
 
 export const appStore = new AppStore();

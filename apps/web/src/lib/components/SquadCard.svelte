@@ -1,7 +1,9 @@
 <script lang="ts">
     import type { Squad } from "$lib/types";
     import { appStore } from "$lib/stores/app.svelte";
+    import { getProfessionStyle } from "$lib/utils/profession";
     import { Button } from "$lib/components/ui/button";
+    import { Badge } from "$lib/components/ui/badge";
     import {
         Dialog,
         DialogContent,
@@ -26,6 +28,26 @@
             .map((id) => appStore.findCharacterWithAccount(id))
             .filter((item): item is NonNullable<typeof item> => item !== null),
     );
+
+    const minLevel = $derived(
+        squadCharacters.length > 0
+            ? Math.min(...squadCharacters.map(({ character }) => character.lvl))
+            : 0,
+    );
+
+    const maxLevel = $derived(
+        squadCharacters.length > 0
+            ? Math.max(...squadCharacters.map(({ character }) => character.lvl))
+            : 0,
+    );
+
+    const professionCounts = $derived(() => {
+        const counts = new Map<string, number>();
+        for (const { character } of squadCharacters) {
+            counts.set(character.prof, (counts.get(character.prof) ?? 0) + 1);
+        }
+        return counts;
+    });
 
     function handleDelete(e: Event) {
         e.stopPropagation();
@@ -82,30 +104,50 @@
             Pusty squad
         </div>
     {:else}
-        <div class="mb-3 space-y-2">
-            {#each squadCharacters.slice(0, 3) as { character } (character.id)}
-                <div class="flex items-center gap-2">
+        <div class="mb-3 grid grid-cols-5 gap-2">
+            {#each squadCharacters as { character } (character.id)}
+                {@const profStyle = getProfessionStyle(character.prof)}
+                <div class="flex flex-col items-center gap-1">
                     <div
                         class="h-12 w-8 overflow-hidden rounded"
                         style={character.spriteUrl
                             ? `background-image: url('${character.spriteUrl}'); background-size: 400% 400%; background-position: 0% 0%;`
                             : "background-color: oklch(var(--muted));"}
                     ></div>
-                    <div class="min-w-0 flex-1">
-                        <div class="truncate font-medium text-xs">
-                            {character.nick}
-                        </div>
-                        <div class="text-xs text-muted-foreground">
-                            Lvl {character.lvl} • {character.profname}
-                        </div>
+                    <div class="w-full truncate text-center text-[10px]">
+                        {character.nick}
                     </div>
+                    <div class="text-center text-[9px] text-muted-foreground">
+                        Lvl {character.lvl}
+                    </div>
+                    <Badge
+                        variant="outline"
+                        class="px-1 py-0 text-[8px] leading-tight"
+                        style="border-color: {profStyle.color}; color: {profStyle.color};"
+                    >
+                        {character.profname}
+                    </Badge>
                 </div>
             {/each}
-            {#if squadCharacters.length > 3}
-                <div class="text-xs text-muted-foreground">
-                    +{squadCharacters.length - 3} więcej
-                </div>
-            {/if}
+        </div>
+
+        <!-- Squad Summary -->
+        <div class="flex flex-wrap items-center gap-2 border-t pt-2 text-xs">
+            <div class="text-muted-foreground">
+                LvL {minLevel}–{maxLevel}
+            </div>
+            <div class="flex flex-wrap gap-1">
+                {#each [...professionCounts()] as [prof, count]}
+                    {@const style = getProfessionStyle(prof)}
+                    <Badge
+                        variant="outline"
+                        class="px-1 py-0 text-[10px]"
+                        style="border-color: {style.color}; color: {style.color};"
+                    >
+                        {style.name} x{count}
+                    </Badge>
+                {/each}
+            </div>
         </div>
     {/if}
 </div>
