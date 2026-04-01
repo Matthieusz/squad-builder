@@ -35,9 +35,13 @@
             : 0,
     );
 
-    const professionsPresent = $derived([
-        ...new Set(squadCharacters.map(({ character }) => character.prof)),
-    ]);
+    const professionCounts = $derived(() => {
+        const counts = new Map<string, number>();
+        for (const { character } of squadCharacters) {
+            counts.set(character.prof, (counts.get(character.prof) ?? 0) + 1);
+        }
+        return counts;
+    });
 
     function goBack() {
         goto(`/group/${groupId}`);
@@ -146,14 +150,14 @@
                         <div class="flex items-center gap-1">
                             <span class="text-muted-foreground">Profesje:</span>
                             <div class="flex flex-wrap gap-1">
-                                {#each professionsPresent as prof}
+                                {#each [...professionCounts()] as [prof, count]}
                                     {@const style = getProfessionStyle(prof)}
                                     <Badge
                                         variant="outline"
                                         class="text-xs"
                                         style="border-color: {style.color}; color: {style.color};"
                                     >
-                                        {style.name}
+                                        {style.name} x{count}
                                     </Badge>
                                 {/each}
                             </div>
